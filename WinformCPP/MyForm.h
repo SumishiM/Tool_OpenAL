@@ -37,6 +37,8 @@ namespace WinformCPP {
 
 	protected:
 
+	protected:
+
 	private:
 		/// <summary>
 		/// Variable nécessaire au concepteur.
@@ -56,7 +58,7 @@ namespace WinformCPP {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(284, 261);
+			this->ClientSize = System::Drawing::Size(756, 495);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->ResumeLayout(false);

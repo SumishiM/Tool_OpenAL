@@ -1,3 +1,6 @@
 D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.vcxproj.AssemblyReference.cache
 D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.MyForm.resources
 D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.vcxproj.GenerateResource.cache
+D:\Git\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.AssemblyReference.cache
+D:\Git\Tool_OpenAL\WinformCPP\Debug\WinformCPP.MyForm.resources
+D:\Git\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.GenerateResource.cache
