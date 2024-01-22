@@ -87,9 +87,8 @@ namespace WinformCPP {
 	}
 
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		   PlayWav("Ruisseau_Escattes_01.wav");
 	}
-		   //String^ name = gcnew String("Soudns/Ruisseau_Escattes_01.wav");
-		   //PlayerPlayWav("Ruisseau_Escattes_01.wav");
-		   //int test = PlayWav("Ruisseau_Escattes_01.wav");
+
 	};
 }

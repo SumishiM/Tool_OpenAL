@@ -1,9 +1,4 @@
-﻿  MyForm.cpp
-  Player.cpp
-D:\Git\Tool_OpenAL\WinformCPP\Player.cpp(23,14): warning C4101: 'iState' : variable locale non référencée
-  Génération de code en cours...
-D:\Git\Tool_OpenAL\WinformCPP\Player.cpp(13): warning C4715: 'InitWav' : les chemins de contrôle ne retournent pas tous une valeur
-  aldlist.obj : module MSIL détecté ; liens incrémentiels désactivés pour MSIL ; édition de liens complète en cours
+﻿  aldlist.obj : module MSIL détecté ; liens incrémentiels désactivés pour MSIL ; édition de liens complète en cours
 Framework.obj : warning LNK4248: jeton typeref non résolu (0100001B) pour 'ALCdevice_struct' ; l'image risque de ne pas s'exécuter
 aldlist.obj : warning LNK4248: jeton typeref non résolu (0100001A) pour 'ALCdevice_struct' ; l'image risque de ne pas s'exécuter
 Framework.obj : warning LNK4248: jeton typeref non résolu (0100001A) pour 'ALCcontext_struct' ; l'image risque de ne pas s'exécuter
