@@ -1,0 +1,3 @@
+D:\Git\Tool_OpenAL\WinformCPP\Release\WinformCPP.vcxproj.AssemblyReference.cache
+D:\Git\Tool_OpenAL\WinformCPP\Release\WinformCPP.MyForm.resources
+D:\Git\Tool_OpenAL\WinformCPP\Release\WinformCPP.vcxproj.GenerateResource.cache

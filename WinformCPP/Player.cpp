@@ -12,8 +12,12 @@ int InitWav() {
 	}
 }
 
+
+
 int PlayWav(const char* fileName)
 {
+	ALFWprintf("Play Wav\n");
+
 	ALuint      uiBuffer;
 	ALuint      uiSource;
 	ALint       iState;
