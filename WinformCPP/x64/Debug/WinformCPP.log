@@ -1,0 +1,4 @@
+﻿  MyForm.obj : module MSIL détecté ; liens incrémentiels désactivés pour MSIL ; édition de liens complète en cours
+MyForm.obj : error LNK2020: jeton non résolu (06000005) WinformCPP.MyForm::button1_Click
+libs\Win32\OpenAL32.lib : warning LNK4272: type d'ordinateur bibliothèque 'x86' en conflit avec le type d'ordinateur cible 'x64'
+D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\x64\Debug\WinformCPP.exe : fatal error LNK1120: 1 externes non résolus
