@@ -1,0 +1,3 @@
+D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.vcxproj.AssemblyReference.cache
+D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.MyForm.resources
+D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.vcxproj.GenerateResource.cache
