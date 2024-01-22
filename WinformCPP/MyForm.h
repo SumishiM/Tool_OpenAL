@@ -41,7 +41,7 @@ namespace WinformCPP {
 		/// <summary>
 		/// Variable nécessaire au concepteur.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -63,4 +63,5 @@ namespace WinformCPP {
 
 		}
 #pragma endregion
+	};
 }
