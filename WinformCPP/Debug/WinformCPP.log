@@ -1,6 +1,1 @@
-﻿  aldlist.obj : module MSIL détecté ; liens incrémentiels désactivés pour MSIL ; édition de liens complète en cours
-Framework.obj : warning LNK4248: jeton typeref non résolu (0100001B) pour 'ALCdevice_struct' ; l'image risque de ne pas s'exécuter
-aldlist.obj : warning LNK4248: jeton typeref non résolu (0100001A) pour 'ALCdevice_struct' ; l'image risque de ne pas s'exécuter
-Framework.obj : warning LNK4248: jeton typeref non résolu (0100001A) pour 'ALCcontext_struct' ; l'image risque de ne pas s'exécuter
-aldlist.obj : warning LNK4248: jeton typeref non résolu (0100001B) pour 'ALCcontext_struct' ; l'image risque de ne pas s'exécuter
-  WinformCPP.vcxproj -> D:\Git\Tool_OpenAL\Debug\WinformCPP.exe
+﻿  WinformCPP.vcxproj -> C:\Users\Etudiant1\Documents\GitHub\Tool_OpenAL\Debug\WinformCPP.exe

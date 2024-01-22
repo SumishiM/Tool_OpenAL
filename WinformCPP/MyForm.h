@@ -59,7 +59,7 @@ namespace WinformCPP {
 		/// le contenu de cette méthode avec l'éditeur de code.
 		/// </summary>
 		void InitializeComponent(void)
-		{		
+		{
 			this->playButton = (gcnew System::Windows::Forms::Button());
 			this->stopButton = (gcnew System::Windows::Forms::Button());
 			this->pauseButton = (gcnew System::Windows::Forms::Button());
@@ -132,7 +132,6 @@ namespace WinformCPP {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(756, 495);
-			this->Controls->Add(this->button1);
 			this->Controls->Add(this->volumeValueText);
 			this->Controls->Add(this->volumeTrackBar);
 			this->Controls->Add(this->resumeButton);
@@ -151,7 +150,7 @@ namespace WinformCPP {
 	}
 	private: System::Void playButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-PlayWav("Ruisseau_Escattes_01.wav");
+		PlayWav("Ruisseau_Escattes_01.wav");
 	}
 	private: System::Void stopButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -169,5 +168,5 @@ PlayWav("Ruisseau_Escattes_01.wav");
 	{
 		volumeValueText->Text = "" + volumeTrackBar->Value + "%";
 	}
-};
+	};
 }

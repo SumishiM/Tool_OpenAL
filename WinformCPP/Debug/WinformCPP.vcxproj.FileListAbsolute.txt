@@ -4,3 +4,7 @@ D:\SVN\Eleves\Hugo Michel\Git\WinformCPP\WinformCPP\Debug\WinformCPP.vcxproj.Gen
 D:\Git\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.AssemblyReference.cache
 D:\Git\Tool_OpenAL\WinformCPP\Debug\WinformCPP.MyForm.resources
 D:\Git\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.GenerateResource.cache
+C:\Users\Etudiant1\Documents\GitHub\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.AssemblyReference.cache
+C:\Users\Etudiant1\Documents\GitHub\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\Etudiant1\Documents\GitHub\Tool_OpenAL\WinformCPP\Debug\WinformCPP.MyForm.resources
+C:\Users\Etudiant1\Documents\GitHub\Tool_OpenAL\WinformCPP\Debug\WinformCPP.vcxproj.GenerateResource.cache
