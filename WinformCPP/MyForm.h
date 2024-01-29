@@ -228,14 +228,22 @@ namespace WinformCPP {
 	private: System::Void WinformCPP::MyForm::playButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		player->Stop();
-		if (listView->SelectedItems[0] != nullptr)
+
+		if (listView->SelectedItems->Count > 0)
 		{
 			msclr::interop::marshal_context oMarshalContext;
-
 			const char* pParameter = oMarshalContext.marshal_as<const char*>(listView->SelectedItems[0]->SubItems[1]->Text);
 
 			if (player != nullptr) {
+				player->Load(pParameter);
+			}
+		}
+		else if (listView->Items->Count > 0) 
+		{
+			msclr::interop::marshal_context oMarshalContext;
+			const char* pParameter = oMarshalContext.marshal_as<const char*>(listView->Items[0]->SubItems[1]->Text);
 
+			if (player != nullptr) {
 				player->Load(pParameter);
 			}
 		}
