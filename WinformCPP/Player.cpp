@@ -102,6 +102,29 @@ void SoundPlayer::Shutdown() {
 	}
 }
 
+using namespace System::IO;
+int SoundPlayer::Load(const char* filePath)
+{
+	Stop();
+	CurrentSound.file = filePath;
+	// Convertir const char* en System::String^
+	System::String^ managedFilePath = gcnew System::String(filePath);
+
+	if (System::IO::Path::GetExtension(managedFilePath)->ToLower() == ".wav")
+	{
+		CurrentSound.extention = ExtentionType::WAV;
+		LoadWav(filePath);
+	}
+	else if (System::IO::Path::GetExtension(managedFilePath)->ToLower() == ".ogg")
+	{
+		CurrentSound.extention = ExtentionType::OGG;
+		LoadOgg(filePath);
+	}
+
+	return 0;
+}
+
+
 int SoundPlayer::LoadOgg(const char* _filePath) {
 
 	// Ouverture du fichier
@@ -239,6 +262,7 @@ void SoundPlayer::Resume() {
 void SoundPlayer::Stop() {
 	IsPlaying = false;
 	alSourceStop(uiSource);
+	alSourcei(uiSource, AL_BUFFER, 0);
 }
 
 unsigned long SoundPlayer::DecodeAndQueueBuffers() {
