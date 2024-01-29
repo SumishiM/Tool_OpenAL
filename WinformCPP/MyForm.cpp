@@ -1,4 +1,5 @@
 #include "MyForm.h"
+#include "Player.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -11,3 +12,4 @@ void Main(array<String^>^ args)
 	WinformCPP::MyForm form;
 	Application::Run(% form);
 }
+

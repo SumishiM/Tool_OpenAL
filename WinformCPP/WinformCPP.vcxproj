@@ -78,11 +78,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>framework/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>framework/Win32;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Custom</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libs/Win32/OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs/Win32/OpenAL32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
@@ -91,11 +91,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>framework/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>framework/Win32;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Custom</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libs/Win32/OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs/Win32/OpenAL32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>Main</EntryPointSymbol>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -104,11 +104,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>framework/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>framework/Win32;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Custom</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libs/Win32/OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs/Win32/OpenAL32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>Main</EntryPointSymbol>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -117,11 +117,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>framework/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>framework/Win32;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Custom</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libs/Win32/OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs/Win32/OpenAL32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>

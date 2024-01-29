@@ -1,6 +1,7 @@
+#pragma once
 #include "Player.h"
 
-#pragma once
+SoundPlayer* player;
 
 namespace WinformCPP {
 
@@ -11,13 +12,11 @@ namespace WinformCPP {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	SoundPlayer* player;
 	/// <summary>
 	/// Description résumée de MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
-	public:
 	public:
 		MyForm(void)
 		{
@@ -25,9 +24,8 @@ namespace WinformCPP {
 			//
 			//TODO: ajoutez ici le code du constructeur
 			//
-			player = new SoundPlayer();
+			//player = new SoundPlayer();
 		}
-
 	protected:
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
@@ -38,7 +36,6 @@ namespace WinformCPP {
 			{
 				delete components;
 			}
-			delete player;
 		}
 	private: System::Windows::Forms::Button^ playButton;
 	protected:
@@ -128,7 +125,7 @@ namespace WinformCPP {
 			this->volumeValueText->Name = L"volumeValueText";
 			this->volumeValueText->Size = System::Drawing::Size(35, 20);
 			this->volumeValueText->TabIndex = 5;
-			this->volumeValueText->TextAlign = HorizontalAlignment::Right;
+			//this->volumeValueText->TextAlign = HorizontalAlignment::Right;
 			// 
 			// MyForm
 			// 
@@ -151,25 +148,36 @@ namespace WinformCPP {
 #pragma endregion
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
-	private: System::Void playButton_Click(System::Object^ sender, System::EventArgs^ e)
+
+	private: System::Void WinformCPP::MyForm::playButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
+		if (player != nullptr)
 		player->LoadWav("Ruisseau_Escattes_01.wav");
 	}
-	private: System::Void stopButton_Click(System::Object^ sender, System::EventArgs^ e)
+
+	private: System::Void WinformCPP::MyForm::stopButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		player->Stop();
+		if (player != nullptr)
+			player->Stop();
 	}
-	private: System::Void pauseButton_Click(System::Object^ sender, System::EventArgs^ e)
+
+	private: System::Void WinformCPP::MyForm::pauseButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		player->Pause();
+		if (player != nullptr)
+			player->Pause();
 	}
-	private: System::Void resumeButton_Click(System::Object^ sender, System::EventArgs^ e)
+
+	private: System::Void WinformCPP::MyForm::resumeButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		player->Resume();
+		if (player != nullptr)
+			player->Resume();
 	}
-	private: System::Void volumeTrackBar_Scroll(System::Object^ sender, System::EventArgs^ e)
+
+	private: System::Void WinformCPP::MyForm::volumeTrackBar_Scroll(System::Object^ sender, System::EventArgs^ e)
 	{
 		volumeValueText->Text = "" + volumeTrackBar->Value + "%";
+		if (player != nullptr)
+			player->SetVolume(volumeTrackBar->Value / 100.f);
 	}
 	};
 }
