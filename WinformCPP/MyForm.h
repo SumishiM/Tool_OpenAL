@@ -11,11 +11,13 @@ namespace WinformCPP {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	SoundPlayer* player;
 	/// <summary>
 	/// Description résumée de MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+	public:
 	public:
 		MyForm(void)
 		{
@@ -23,7 +25,7 @@ namespace WinformCPP {
 			//
 			//TODO: ajoutez ici le code du constructeur
 			//
-			InitWav();
+			player = new SoundPlayer();
 		}
 
 	protected:
@@ -36,6 +38,7 @@ namespace WinformCPP {
 			{
 				delete components;
 			}
+			delete player;
 		}
 	private: System::Windows::Forms::Button^ playButton;
 	protected:
@@ -150,19 +153,19 @@ namespace WinformCPP {
 	}
 	private: System::Void playButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		PlayWav("Ruisseau_Escattes_01.wav");
+		player->LoadWav("Ruisseau_Escattes_01.wav");
 	}
 	private: System::Void stopButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-
+		player->Stop();
 	}
 	private: System::Void pauseButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-
+		player->Pause();
 	}
 	private: System::Void resumeButton_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-
+		player->Resume();
 	}
 	private: System::Void volumeTrackBar_Scroll(System::Object^ sender, System::EventArgs^ e)
 	{

@@ -1,65 +1,313 @@
-#include "Player.h"
-#include "../framework/Win32/Framework.h"
+#include <iostream>
+#include "framework/Win32/Framework.h"
+#include "Vorbis/vorbisfile.h"
+#include "OggPlayer.h"
 
+SoundPlayer::SoundPlayer() {
+	Init();
+}
 
-int InitWav() {
+SoundPlayer::~SoundPlayer() {
+	Shutdown();
+}
+
+void SoundPlayer::Init() {
 	// Initialize Framework
 	ALFWInit();
-	if (!ALFWInitOpenAL())
-	{
+
+	// Initialize OggVorbis library
+	InitVorbisFile();
+	if (!g_bVorbisInit) {
+		std::cerr << "Failed to find OggVorbis DLLs (vorbisfile.dll, ogg.dll, or vorbis.dll)" << std::endl;
 		ALFWShutdown();
-		return 0;
+		exit(EXIT_FAILURE);
+	}
+
+	// Initialize OpenAL
+	if (!ALFWInitOpenAL()) {
+		std::cerr << "Failed to initialize OpenAL" << std::endl;
+		ALFWShutdown();
+		exit(EXIT_FAILURE);
+	}
+
+	// Set up Ogg callbacks
+	sCallbacks.read_func = ov_read_func;
+	sCallbacks.seek_func = ov_seek_func;
+	sCallbacks.close_func = ov_close_func;
+	sCallbacks.tell_func = ov_tell_func;
+
+	// Generate OpenAL Buffers and Source
+	alGenBuffers(NUMBUFFERS, uiBuffers);
+	alGenSources(1, &uiSource);
+}
+
+void SoundPlayer::Shutdown() {
+	// Stop the Source and clear the Queue
+	if (IsPlaying)
+	{
+		IsPlaying = false;
+		alSourceStop(uiSource);
+	}
+	alSourcei(uiSource, AL_BUFFER, 0);
+
+	// Clean up Buffers and Source
+	alDeleteSources(1, &uiSource);
+	alDeleteBuffers(NUMBUFFERS, uiBuffers);
+
+	// Close OggVorbis stream
+	fn_ov_clear(&sOggVorbisFile);
+
+	// Shutdown VorbisFile Library
+	ShutdownVorbisFile();
+
+	// Shutdown OpenAL
+	ALFWShutdownOpenAL();
+
+	// Shutdown Framework
+	ALFWShutdown();
+
+	// Free memory
+	if (pDecodeBuffer) {
+		free(pDecodeBuffer);
+		pDecodeBuffer = NULL;
 	}
 }
 
-
-
-int PlayWav(const char* fileName)
-{
-	ALFWprintf("Play Wav\n");
-
-	ALuint      uiBuffer;
-	ALuint      uiSource;
-	ALint       iState;
-
-	// Generate an AL Buffer
-	alGenBuffers(1, &uiBuffer);
-
-	// Load Wave file into OpenAL Buffer
-	if (!ALFWLoadWaveToBuffer((char*)fileName, uiBuffer))
-	{
-		ALFWprintf("Failed to load %s\n", fileName);
+int SoundPlayer::LoadOgg(const char* filePath) {
+	// Open the OggVorbis file
+	FILE* pOggVorbisFile = fopen(ALFWaddMediaPath(filePath), "rb");
+	if (!pOggVorbisFile) {
+		std::cerr << "Could not find " << ALFWaddMediaPath(filePath) << std::endl;
+		return 1;
 	}
 
+	// Create an OggVorbis file stream
+	if (fn_ov_open_callbacks(pOggVorbisFile, &sOggVorbisFile, NULL, 0, sCallbacks) != 0) {
+		std::cerr << "Failed to open OggVorbis file" << std::endl;
+		fclose(pOggVorbisFile);
+		return 1;
+	}
+
+	// Get information about the file (Channels, Format, and Frequency)
+	psVorbisInfo = fn_ov_info(&sOggVorbisFile, -1);
+	if (!psVorbisInfo) {
+		std::cerr << "Failed to get OggVorbis file information" << std::endl;
+		return 1;
+	}
+
+	ulFrequency = psVorbisInfo->rate;
+	ulChannels = psVorbisInfo->channels;
+
+	if (ulChannels == 1) {
+		ulFormat = AL_FORMAT_MONO16;
+		ulBufferSize = ulFrequency >> 1;
+		ulBufferSize -= (ulBufferSize % 2);
+	}
+	else if (ulChannels == 2) {
+		ulFormat = AL_FORMAT_STEREO16;
+		ulBufferSize = ulFrequency;
+		ulBufferSize -= (ulBufferSize % 4);
+	}
+	else if (ulChannels == 4) {
+		ulFormat = alGetEnumValue("AL_FORMAT_QUAD16");
+		ulBufferSize = ulFrequency * 2;
+		ulBufferSize -= (ulBufferSize % 8);
+	}
+	else if (ulChannels == 6) {
+		ulFormat = alGetEnumValue("AL_FORMAT_51CHN16");
+		ulBufferSize = ulFrequency * 3;
+		ulBufferSize -= (ulBufferSize % 12);
+	}
+	else {
+		std::cerr << "Unsupported number of channels" << std::endl;
+		return 1;
+	}
+
+	// Allocate a buffer for decoded data
+	pDecodeBuffer = (char*)malloc(ulBufferSize);
+	if (!pDecodeBuffer) {
+		std::cerr << "Failed to allocate memory for decoded OggVorbis data" << std::endl;
+		fn_ov_clear(&sOggVorbisFile);
+		return 1;
+	}
+
+	// Fill Buffers with decoded audio data
+	for (iLoop = 0; iLoop < NUMBUFFERS; iLoop++) {
+		DecodeAndQueueBuffers();
+	}
+
+	// Start playing source
+	IsPlaying = 0;
+	alSourcePlay(uiSource);
+
+	return 0;
+}
+
+int SoundPlayer::LoadWav(const char* filePath) {
+
+	alGenBuffers(1, &uiBuffer);
+	// Load Wave file into OpenAL Buffer
+
+	if (!ALFWLoadWaveToBuffer((char*)filePath, uiBuffer))
+	{
+		ALFWprintf("Failed to load %s\n", filePath);
+	}
 	// Generate a Source to playback the Buffer
 	alGenSources(1, &uiSource);
 
 	// Attach Source to Buffer
 	alSourcei(uiSource, AL_BUFFER, uiBuffer);
-	//pour boucler un son
-	alSourcei(uiSource, AL_LOOPING, 1);
+	//pour le volume sonore
+	alSourcef(uiSource, AL_GAIN, volume);
 	// Play Source
+
+	IsPlaying = true;
 	alSourcePlay(uiSource);
 
-	/*
-	do
-	{
-		Sleep(100);
-		ALFWprintf(".");
-		// Get Source State
-		alGetSourcei(uiSource, AL_SOURCE_STATE, &iState);
-	} while (iState == AL_PLAYING);
-	*/
-
-	// Clean up by deleting Source(s) and Buffer(s)
-	/*
-	alSourceStop(uiSource);
-	alDeleteSources(1, &uiSource);
-	alDeleteBuffers(1, &uiBuffer);
-
-	ALFWShutdownOpenAL();
-
-	ALFWShutdown();
-	*/
 	return 0;
+}
+
+void SoundPlayer::SetVolume(float _volume) {
+	// clamp
+	volume = _volume;
+	if (volume < 0.f)
+		volume = 0.f;
+	else if (volume > 1.f)
+		volume = 1.f;
+
+	// set volume
+	alSourcef(uiSource, AL_GAIN, volume);
+}
+
+unsigned long SoundPlayer::Play() {
+	IsPlaying = true;
+	alSourcePlay(uiSource);
+}
+
+void SoundPlayer::Pause() {
+	IsPlaying = false;
+	alSourcePause(uiSource);
+}
+
+void SoundPlayer::Resume() {
+	IsPlaying = true;
+	alSourcePlay(uiSource);
+}
+
+void SoundPlayer::Stop() {
+	IsPlaying = false;
+	alSourceStop(uiSource);
+}
+
+unsigned long SoundPlayer::DecodeAndQueueBuffers() {
+	ulBytesWritten = DecodeOggVorbis(&sOggVorbisFile, pDecodeBuffer, ulBufferSize, ulChannels);
+	if (ulBytesWritten) {
+		alBufferData(uiBuffers[iLoop], ulFormat, pDecodeBuffer, ulBytesWritten, ulFrequency);
+		alSourceQueueBuffers(uiSource, 1, &uiBuffers[iLoop]);
+		return ulBytesWritten;
+	}
+	return 0;
+}
+
+void InitVorbisFile()
+{
+	if (g_bVorbisInit)
+		return;
+
+	// Try and load Vorbis DLLs (VorbisFile.dll will load ogg.dll and vorbis.dll)
+	g_hVorbisFileDLL = LoadLibrary(_T("vorbisfile.dll"));
+	if (g_hVorbisFileDLL)
+	{
+		fn_ov_clear = (LPOVCLEAR)GetProcAddress(g_hVorbisFileDLL, "ov_clear");
+		fn_ov_read = (LPOVREAD)GetProcAddress(g_hVorbisFileDLL, "ov_read");
+		fn_ov_pcm_total = (LPOVPCMTOTAL)GetProcAddress(g_hVorbisFileDLL, "ov_pcm_total");
+		fn_ov_info = (LPOVINFO)GetProcAddress(g_hVorbisFileDLL, "ov_info");
+		fn_ov_comment = (LPOVCOMMENT)GetProcAddress(g_hVorbisFileDLL, "ov_comment");
+		fn_ov_open_callbacks = (LPOVOPENCALLBACKS)GetProcAddress(g_hVorbisFileDLL, "ov_open_callbacks");
+
+		if (fn_ov_clear && fn_ov_read && fn_ov_pcm_total && fn_ov_info &&
+			fn_ov_comment && fn_ov_open_callbacks)
+		{
+			g_bVorbisInit = true;
+		}
+	}
+}
+
+void ShutdownVorbisFile()
+{
+	if (g_hVorbisFileDLL)
+	{
+		FreeLibrary(g_hVorbisFileDLL);
+		g_hVorbisFileDLL = NULL;
+	}
+	g_bVorbisInit = false;
+}
+
+unsigned long DecodeOggVorbis(OggVorbis_File* psOggVorbisFile, char* pDecodeBuffer, unsigned long ulBufferSize, unsigned long ulChannels)
+{
+	int current_section;
+	long lDecodeSize;
+	unsigned long ulSamples;
+	short* pSamples;
+
+	unsigned long ulBytesDone = 0;
+	while (1)
+	{
+		lDecodeSize = fn_ov_read(psOggVorbisFile, pDecodeBuffer + ulBytesDone, ulBufferSize - ulBytesDone, 0, 2, 1, &current_section);
+		if (lDecodeSize > 0)
+		{
+			ulBytesDone += lDecodeSize;
+
+			if (ulBytesDone >= ulBufferSize)
+				break;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	// Mono, Stereo and 4-Channel files decode into the same channel order as WAVEFORMATEXTENSIBLE,
+	// however 6-Channels files need to be re-ordered
+	if (ulChannels == 6)
+	{
+		pSamples = (short*)pDecodeBuffer;
+		for (ulSamples = 0; ulSamples < (ulBufferSize >> 1); ulSamples += 6)
+		{
+			// WAVEFORMATEXTENSIBLE Order : FL, FR, FC, LFE, RL, RR
+			// OggVorbis Order            : FL, FC, FR,  RL, RR, LFE
+			Swap(pSamples[ulSamples + 1], pSamples[ulSamples + 2]);
+			Swap(pSamples[ulSamples + 3], pSamples[ulSamples + 5]);
+			Swap(pSamples[ulSamples + 4], pSamples[ulSamples + 5]);
+		}
+	}
+
+	return ulBytesDone;
+}
+
+void Swap(short& s1, short& s2)
+{
+	short sTemp = s1;
+	s1 = s2;
+	s2 = sTemp;
+}
+
+size_t ov_read_func(void* ptr, size_t size, size_t nmemb, void* datasource)
+{
+	return fread(ptr, size, nmemb, (FILE*)datasource);
+}
+
+int ov_seek_func(void* datasource, ogg_int64_t offset, int whence)
+{
+	return fseek((FILE*)datasource, (long)offset, whence);
+}
+
+int ov_close_func(void* datasource)
+{
+	return fclose((FILE*)datasource);
+}
+
+long ov_tell_func(void* datasource)
+{
+	return ftell((FILE*)datasource);
 }
