@@ -102,11 +102,23 @@ void SoundPlayer::Shutdown() {
 	}
 }
 
-int SoundPlayer::LoadOgg(const char* filePath) {
-	// Open the OggVorbis file
-	FILE* pOggVorbisFile = fopen(ALFWaddMediaPath(filePath), "rb");
-	if (!pOggVorbisFile) {
-		std::cerr << "Could not find " << ALFWaddMediaPath(filePath) << std::endl;
+int SoundPlayer::LoadOgg(const char* _filePath) {
+
+	// Ouverture du fichier
+	char fileName[_MAX_PATH] = { "" };
+	for (int i = 0; i < strlen(_filePath); i++)
+	{
+		fileName[i] = _filePath[i];
+	}
+
+	FILE* pOggVorbisFile = fopen(fileName, "rb");
+
+	if (!pOggVorbisFile)
+	{
+		ALFWprintf("Could not find %s\n", fileName);
+		ShutdownVorbisFile();
+		ALFWShutdownOpenAL();
+		ALFWShutdown();
 		return 1;
 	}
 
