@@ -182,6 +182,7 @@ void SoundPlayer::SetVolume(float _volume) {
 unsigned long SoundPlayer::Play() {
 	IsPlaying = true;
 	alSourcePlay(uiSource);
+	return 0;
 }
 
 void SoundPlayer::Pause() {
