@@ -27,15 +27,9 @@ namespace WinformCPP {
 		MyForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: ajoutez ici le code du constructeur
-			//
 			player = new SoundPlayer();
 		}
 	protected:
-		/// <summary>
-		/// Nettoyage des ressources utilisées.
-		/// </summary>
 		~MyForm()
 		{
 			if (components)
@@ -63,16 +57,9 @@ namespace WinformCPP {
 	protected:
 
 	private:
-		/// <summary>
-		/// Variable nécessaire au concepteur.
-		/// </summary>
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
-		/// le contenu de cette méthode avec l'éditeur de code.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->playButton = (gcnew System::Windows::Forms::Button());
@@ -156,7 +143,7 @@ namespace WinformCPP {
 			this->AddSoundButton->Name = L"AddSoundButton";
 			this->AddSoundButton->Size = System::Drawing::Size(75, 23);
 			this->AddSoundButton->TabIndex = 6;
-			this->AddSoundButton->Text = L"Add Button";
+			this->AddSoundButton->Text = L"Add Sound";
 			this->AddSoundButton->UseVisualStyleBackColor = true;
 			this->AddSoundButton->Click += gcnew System::EventHandler(this, &MyForm::AddSound_Click);
 			// 

@@ -1,1 +1,11 @@
-﻿  WinformCPP.vcxproj -> D:\Git\Tool_OpenAL\Debug\WinformCPP.exe
+﻿  MyForm.cpp
+  Player.cpp
+D:\Git\Tool_OpenAL\WinformCPP\Player.cpp(134,20): warning C4018: '<' : incompatibilité signed/unsigned
+D:\Git\Tool_OpenAL\WinformCPP\Player.cpp(139,25): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Génération de code en cours...
+  aldlist.obj : module MSIL détecté ; liens incrémentiels désactivés pour MSIL ; édition de liens complète en cours
+Framework.obj : warning LNK4248: jeton typeref non résolu (0100001B) pour 'ALCdevice_struct' ; l'image risque de ne pas s'exécuter
+aldlist.obj : warning LNK4248: jeton typeref non résolu (0100001A) pour 'ALCdevice_struct' ; l'image risque de ne pas s'exécuter
+Framework.obj : warning LNK4248: jeton typeref non résolu (0100001A) pour 'ALCcontext_struct' ; l'image risque de ne pas s'exécuter
+aldlist.obj : warning LNK4248: jeton typeref non résolu (0100001B) pour 'ALCcontext_struct' ; l'image risque de ne pas s'exécuter
+  WinformCPP.vcxproj -> D:\Git\Tool_OpenAL\Debug\WinformCPP.exe

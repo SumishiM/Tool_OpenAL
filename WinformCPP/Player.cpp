@@ -32,6 +32,8 @@ LPOVOPENCALLBACKS	fn_ov_open_callbacks = NULL;
 
 bool g_bVorbisInit = false;
 
+
+
 SoundPlayer::SoundPlayer() {
 	Init();
 }
