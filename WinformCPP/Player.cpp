@@ -1,7 +1,7 @@
 #include <iostream>
 #include "framework/Win32/Framework.h"
 #include "Vorbis/vorbisfile.h"
-#include "OggPlayer.h"
+#include "Player.h"
 
 SoundPlayer::SoundPlayer() {
 	Init();
