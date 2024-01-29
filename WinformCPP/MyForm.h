@@ -24,7 +24,7 @@ namespace WinformCPP {
 			//
 			//TODO: ajoutez ici le code du constructeur
 			//
-			//player = new SoundPlayer();
+			player = new SoundPlayer();
 		}
 	protected:
 		/// <summary>
